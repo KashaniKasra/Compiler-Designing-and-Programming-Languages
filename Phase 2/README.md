@@ -65,7 +65,7 @@ Optimizations are implemented in a separate visitor. They include:
 
 ---
 
-## 🧪 Testing Guidelines
+## Testing Guidelines
 
 - All `.cpy` files in the `tests/` directory are valid CPY test cases.
 - Outputs are automatically verified.
@@ -75,7 +75,7 @@ Optimizations are implemented in a separate visitor. They include:
 
 ---
 
-## 🛠 How to Run
+## How to Run
 
 ```bash
 java -jar utilities/antlr-4.13.1-complete.jar -visitor -no-listener grammar/SimpleLang.g4
