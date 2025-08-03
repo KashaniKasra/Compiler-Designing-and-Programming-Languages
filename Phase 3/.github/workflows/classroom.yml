@@ -1,0 +1,202 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: 'Type: Argument Mismatch 1'
+      id: type-argument-mismatch-1
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: 'Type: Argument Mismatch 1'
+        setup-command: ''
+        command: javac -cp utilities/antlr-4.13.1-complete.jar -d out $(find src gen
+          -name "*.java") && java -cp out:utilities/antlr-4.13.1-complete.jar SimpleLang
+          "tests/type/ArgumentMismatch-1.cpy" | sort -t':' -k1.6n -k2
+        input: ''
+        expected-output: |-
+          Line:7 -> argument type mismatch
+          Line:14 -> argument type mismatch
+        comparison-method: contains
+        timeout: 10
+        max-score: 1
+    - name: 'Type: Argument Mismatch 2'
+      id: type-argument-mismatch-2
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: 'Type: Argument Mismatch 2'
+        setup-command: ''
+        command: javac -cp utilities/antlr-4.13.1-complete.jar -d out $(find src gen
+          -name "*.java") && java -cp out:utilities/antlr-4.13.1-complete.jar SimpleLang
+          "tests/type/ArgumentMismatch-2.cpy" | sort -t':' -k1.6n -k2
+        input: ''
+        expected-output: Line:12 -> argument type mismatch
+        comparison-method: contains
+        timeout: 10
+        max-score: 1
+    - name: 'Type: Expression Not Matching Types 1'
+      id: type-expression-not-matching-types-1
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: 'Type: Expression Not Matching Types 1'
+        setup-command: ''
+        command: javac -cp utilities/antlr-4.13.1-complete.jar -d out $(find src gen
+          -name "*.java") && java -cp out:utilities/antlr-4.13.1-complete.jar SimpleLang
+          "tests/type/ExpressionNotMatchingTypes-1.cpy" | sort -t':' -k1.6n -k2
+        input: ''
+        expected-output: Line:3 -> type mismatch in expression
+        comparison-method: contains
+        timeout: 10
+        max-score: 1
+    - name: 'Type: Expression Not Matching Types 2'
+      id: type-expression-not-matching-types-2
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: 'Type: Expression Not Matching Types 2'
+        setup-command: ''
+        command: javac -cp utilities/antlr-4.13.1-complete.jar -d out $(find src gen
+          -name "*.java") && java -cp out:utilities/antlr-4.13.1-complete.jar SimpleLang
+          "tests/type/ExpressionNotMatchingTypes-2.cpy" | sort -t':' -k1.6n -k2
+        input: ''
+        expected-output: Line:4 -> type mismatch in expression
+        comparison-method: contains
+        timeout: 10
+        max-score: 1
+    - name: 'Type: Unmatched Return Type 1'
+      id: type-unmatched-return-type-1
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: 'Type: Unmatched Return Type 1'
+        setup-command: ''
+        command: javac -cp utilities/antlr-4.13.1-complete.jar -d out $(find src gen
+          -name "*.java") && java -cp out:utilities/antlr-4.13.1-complete.jar SimpleLang
+          "tests/type/UnmatchedReturnType-1.cpy" | sort -t':' -k1.6n -k2
+        input: ''
+        expected-output: Line:6 -> return type mismatch
+        comparison-method: contains
+        timeout: 10
+        max-score: 1
+    - name: 'Type: Unmatched Return Type 2'
+      id: type-unmatched-return-type-2
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: 'Type: Unmatched Return Type 2'
+        setup-command: ''
+        command: javac -cp utilities/antlr-4.13.1-complete.jar -d out $(find src gen
+          -name "*.java") && java -cp out:utilities/antlr-4.13.1-complete.jar SimpleLang
+          "tests/type/UnmatchedReturnType-2.cpy" | sort -t':' -k1.6n -k2
+        input: ''
+        expected-output: Line:2 -> return type mismatch
+        comparison-method: contains
+        timeout: 10
+        max-score: 1
+    - name: 'Vuln: Not Deallocating Pointer 1'
+      id: vuln-not-deallocating-pointer-1
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: 'Vuln: Not Deallocating Pointer 1'
+        setup-command: ''
+        command: javac -cp utilities/antlr-4.13.1-complete.jar -d out $(find src gen
+          -name "*.java") && java -cp out:utilities/antlr-4.13.1-complete.jar SimpleLang
+          "tests/vuln/NotDeallocatingPointer-1.cpy" | sort -t':' -k1.6n -k2
+        input: ''
+        expected-output: Line:2 -> memory not deallocated
+        comparison-method: contains
+        timeout: 10
+        max-score: 1
+    - name: 'Vuln: Not Deallocating Pointer 2'
+      id: vuln-not-deallocating-pointer-2
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: 'Vuln: Not Deallocating Pointer 2'
+        setup-command: ''
+        command: javac -cp utilities/antlr-4.13.1-complete.jar -d out $(find src gen
+          -name "*.java") && java -cp out:utilities/antlr-4.13.1-complete.jar SimpleLang
+          "tests/vuln/NotDeallocatingPointer-2.cpy" | sort -t':' -k1.6n -k2
+        input: ''
+        expected-output: Line:7 -> memory not deallocated
+        comparison-method: contains
+        timeout: 10
+        max-score: 1
+    - name: 'Vuln: Uninitialized Variable 1'
+      id: vuln-uninitialized-variable-1
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: 'Vuln: Uninitialized Variable 1'
+        setup-command: ''
+        command: javac -cp utilities/antlr-4.13.1-complete.jar -d out $(find src gen
+          -name "*.java") && java -cp out:utilities/antlr-4.13.1-complete.jar SimpleLang
+          "tests/vuln/UninitializedVariable-1.cpy" | sort -t':' -k1.6n -k2
+        input: ''
+        expected-output: Line:3 -> uninitialized variable used
+        comparison-method: contains
+        timeout: 10
+        max-score: 1
+    - name: 'Vuln: Uninitialized Variable 2'
+      id: vuln-uninitialized-variable-2
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: 'Vuln: Uninitialized Variable 2'
+        setup-command: ''
+        command: javac -cp utilities/antlr-4.13.1-complete.jar -d out $(find src gen
+          -name "*.java") && java -cp out:utilities/antlr-4.13.1-complete.jar SimpleLang
+          "tests/vuln/UninitializedVariable-2.cpy" | sort -t':' -k1.6n -k2
+        input: ''
+        expected-output: Line:3 -> uninitialized variable used
+        comparison-method: contains
+        timeout: 10
+        max-score: 1
+    - name: 'Vuln: User Controlled Malloc 1'
+      id: vuln-user-controlled-malloc-1
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: 'Vuln: User Controlled Malloc 1'
+        setup-command: ''
+        command: javac -cp utilities/antlr-4.13.1-complete.jar -d out $(find src gen
+          -name "*.java") && java -cp out:utilities/antlr-4.13.1-complete.jar SimpleLang
+          "tests/vuln/UserControlledMalloc-1.cpy" | sort -t':' -k1.6n -k2
+        input: ''
+        expected-output: Line:4 -> user-controlled value used in malloc
+        comparison-method: contains
+        timeout: 10
+        max-score: 1
+    - name: 'Vuln: User Controlled Malloc 2'
+      id: vuln-user-controlled-malloc-2
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: 'Vuln: User Controlled Malloc 2'
+        setup-command: ''
+        command: javac -cp utilities/antlr-4.13.1-complete.jar -d out $(find src gen
+          -name "*.java") && java -cp out:utilities/antlr-4.13.1-complete.jar SimpleLang
+          "tests/vuln/UserControlledMalloc-2.cpy" | sort -t':' -k1.6n -k2
+        input: ''
+        expected-output: Line:4 -> user-controlled value used in malloc
+        comparison-method: contains
+        timeout: 10
+        max-score: 1
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        TYPE-ARGUMENT-MISMATCH-1_RESULTS: "${{steps.type-argument-mismatch-1.outputs.result}}"
+        TYPE-ARGUMENT-MISMATCH-2_RESULTS: "${{steps.type-argument-mismatch-2.outputs.result}}"
+        TYPE-EXPRESSION-NOT-MATCHING-TYPES-1_RESULTS: "${{steps.type-expression-not-matching-types-1.outputs.result}}"
+        TYPE-EXPRESSION-NOT-MATCHING-TYPES-2_RESULTS: "${{steps.type-expression-not-matching-types-2.outputs.result}}"
+        TYPE-UNMATCHED-RETURN-TYPE-1_RESULTS: "${{steps.type-unmatched-return-type-1.outputs.result}}"
+        TYPE-UNMATCHED-RETURN-TYPE-2_RESULTS: "${{steps.type-unmatched-return-type-2.outputs.result}}"
+        VULN-NOT-DEALLOCATING-POINTER-1_RESULTS: "${{steps.vuln-not-deallocating-pointer-1.outputs.result}}"
+        VULN-NOT-DEALLOCATING-POINTER-2_RESULTS: "${{steps.vuln-not-deallocating-pointer-2.outputs.result}}"
+        VULN-UNINITIALIZED-VARIABLE-1_RESULTS: "${{steps.vuln-uninitialized-variable-1.outputs.result}}"
+        VULN-UNINITIALIZED-VARIABLE-2_RESULTS: "${{steps.vuln-uninitialized-variable-2.outputs.result}}"
+        VULN-USER-CONTROLLED-MALLOC-1_RESULTS: "${{steps.vuln-user-controlled-malloc-1.outputs.result}}"
+        VULN-USER-CONTROLLED-MALLOC-2_RESULTS: "${{steps.vuln-user-controlled-malloc-2.outputs.result}}"
+      with:
+        runners: type-argument-mismatch-1,type-argument-mismatch-2,type-expression-not-matching-types-1,type-expression-not-matching-types-2,type-unmatched-return-type-1,type-unmatched-return-type-2,vuln-not-deallocating-pointer-1,vuln-not-deallocating-pointer-2,vuln-uninitialized-variable-1,vuln-uninitialized-variable-2,vuln-user-controlled-malloc-1,vuln-user-controlled-malloc-2
